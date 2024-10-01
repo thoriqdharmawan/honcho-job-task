@@ -24,7 +24,7 @@ type Props = {
   children: ReactNode;
 };
 
-const ComponentProviders: FC<Props> = ({ children }: Props) => {
+const ComponentProvider: FC<Props> = ({ children }: Props) => {
   return (
     <html lang="en">
       <body
@@ -37,4 +37,4 @@ const ComponentProviders: FC<Props> = ({ children }: Props) => {
   );
 };
 
-export default ComponentProviders;
+export default ComponentProvider;

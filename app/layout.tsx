@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import ComponentProviders from "@/providers/ComponentProviders";
+import ComponentProvider from "@/providers/ComponentProvider";
 import { FC, ReactNode } from "react";
 import "./globals.css";
 
@@ -13,7 +13,7 @@ type Props = {
 };
 
 const RootLayout: FC<Props> = ({ children }: Readonly<Props>) => {
-  return <ComponentProviders>{children}</ComponentProviders>;
+  return <ComponentProvider>{children}</ComponentProvider>;
 };
 
 export default RootLayout;
