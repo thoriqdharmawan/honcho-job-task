@@ -59,7 +59,7 @@ const ProcessImage: React.FC = () => {
 
   return (
     <div className="flex flex-col">
-      <div style={{ marginTop: "30px" }}>
+      <div>
         <span style={{ marginRight: "10px" }}>Select an image file:</span>
         <input
           type="file"
