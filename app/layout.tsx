@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import ComponentProvider from "@/providers/ComponentProvider";
 import { FC, ReactNode } from "react";
+import { ImageAdjustmentProvider } from "@/providers/ImageAdjustmentProvider";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -13,7 +14,11 @@ type Props = {
 };
 
 const RootLayout: FC<Props> = ({ children }: Readonly<Props>) => {
-  return <ComponentProvider>{children}</ComponentProvider>;
+  return (
+    <ComponentProvider>
+      <ImageAdjustmentProvider>{children}</ImageAdjustmentProvider>
+    </ComponentProvider>
+  );
 };
 
 export default RootLayout;
