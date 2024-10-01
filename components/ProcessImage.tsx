@@ -1,36 +1,18 @@
 import React, { useRef, useState, useEffect } from "react";
 import cv from "@techstark/opencv-js";
+import ProcessedImage from "./ProcessedImage";
 
 const ProcessImage: React.FC = () => {
   const inputImgRef = useRef<HTMLImageElement>(null);
-  const processedImgRef = useRef<HTMLCanvasElement>(null);
-
   const [imgUrl, setImgUrl] = useState<string | null>(null);
   const [originalImgUrl, setOriginalImgUrl] = useState<string | null>(null);
   const [isImageLoaded, setIsImageLoaded] = useState(false);
+  const [action, setAction] = useState<string>("");
 
   useEffect(() => {
     // @ts-ignore
     window.cv = cv;
   }, []);
-
-  const processImage = () => {
-    const imgElement = inputImgRef.current;
-    if (imgElement) {
-      const img = cv.imread(imgElement);
-      const imgGray = new cv.Mat();
-
-      cv.cvtColor(img, imgGray, cv.COLOR_BGR2HLS);
-      // @ts-ignore
-      cv.imshow(processedImgRef.current, imgGray);
-
-      const canvas = processedImgRef.current;
-      if (canvas) {
-        const image = canvas.toDataURL("image/png");
-        setImgUrl(image);
-      }
-    }
-  };
 
   const resetImage = () => {
     if (originalImgUrl) {
@@ -68,8 +50,15 @@ const ProcessImage: React.FC = () => {
     }
   };
 
+  const handleSelectFilter = (canvas: HTMLCanvasElement | null) => {
+    if (canvas) {
+      const image = canvas.toDataURL("image/png");
+      setImgUrl(image);
+    }
+  };
+
   return (
-    <div>
+    <div className="flex flex-col">
       <div style={{ marginTop: "30px" }}>
         <span style={{ marginRight: "10px" }}>Select an image file:</span>
         <input
@@ -84,7 +73,10 @@ const ProcessImage: React.FC = () => {
         <div className="images-container">
           <div style={{ marginTop: "20px" }}>
             {isImageLoaded && (
-              <button onClick={processImage}>Process Image</button>
+              <button onClick={() => setAction("FILTER")}>Filter Image</button>
+            )}
+            {isImageLoaded && (
+              <button onClick={() => setAction("")}>Close filter Image</button>
             )}
             <button onClick={downloadImage} style={{ marginLeft: "10px" }}>
               Download
@@ -99,10 +91,26 @@ const ProcessImage: React.FC = () => {
             <img ref={inputImgRef} alt="Original input" src={imgUrl} />
           </div>
 
-          <div className="image-card">
-            <div style={{ margin: "10px" }}>↓↓↓ The processed image ↓↓↓</div>
-            <canvas ref={processedImgRef} />
-          </div>
+          {action === "FILTER" && (
+            <div className="image-card">
+              <div style={{ margin: "10px" }}>↓↓↓ The processed image ↓↓↓</div>
+              <ProcessedImage
+                imgElement={inputImgRef.current}
+                filter={cv.COLOR_BGR2HLS}
+                onSelectFilter={handleSelectFilter}
+              />
+              <ProcessedImage
+                imgElement={inputImgRef.current}
+                filter={cv.COLOR_BGR2Luv}
+                onSelectFilter={handleSelectFilter}
+              />
+              <ProcessedImage
+                imgElement={inputImgRef.current}
+                filter={cv.COLOR_BGR2XYZ}
+                onSelectFilter={handleSelectFilter}
+              />
+            </div>
+          )}
         </div>
       )}
     </div>
