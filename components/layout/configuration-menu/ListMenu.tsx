@@ -70,6 +70,11 @@ const ListMenu: FC = () => {
       onClick: () => setAction("FILTER"),
     },
     {
+      label: "Adjustment",
+      icon: <SlidersHorizontal className="mr-2 h-4 w-4" />,
+      onClick: () => setAction("ADJUSTMENT"),
+    },
+    {
       label: "Crop",
       icon: <Crop className="mr-2 h-4 w-4" />,
       onClick: () => setAction("CROP"),

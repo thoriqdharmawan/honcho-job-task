@@ -1,3 +1,4 @@
+import ConfigWrapper from "@/components/shared/ConfigWrapper";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
@@ -22,19 +23,11 @@ const CropConfig: FC = () => {
   };
 
   return (
-    <ScrollArea
-      className={cn(
-        "overflow-x-auto md:overflow-y-hidden",
-        "w-full md:w-[var(--sidebar-width)]",
-        "h-[--config-bottom-height] md:h-[calc(100vh-var(--header-height))]",
-      )}
-    >
-      <div className="flex w-full p-4 md:flex-col md:items-center">
-        <Button onClick={handleCrop} className="w-full">
-          Crop
-        </Button>
-      </div>
-    </ScrollArea>
+    <ConfigWrapper>
+      <Button onClick={handleCrop} className="w-full">
+        Crop
+      </Button>
+    </ConfigWrapper>
   );
 };
 
