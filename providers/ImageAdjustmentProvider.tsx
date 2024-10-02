@@ -1,5 +1,6 @@
 "use client";
 
+import { type IMAGE_ADJUSTMENT_ACTION_TYPES } from "@/lib/global.types";
 import type {
   Dispatch,
   MutableRefObject,
@@ -57,7 +58,7 @@ const ImageAdjustmentProvider = ({ children }: { children: ReactNode }) => {
     processedImg: null,
     originalImage: null,
   });
-  const [cropOffset, setCropOffset] = useState<number>(200)
+  const [cropOffset, setCropOffset] = useState<number>(200);
 
   return (
     <ImageAdjustmentContext.Provider

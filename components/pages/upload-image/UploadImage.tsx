@@ -1,4 +1,5 @@
 import { useImageAdjustmentContext } from "@/providers/ImageAdjustmentProvider";
+import Image from "next/image";
 
 const UploadImage = () => {
   const { image, inputImgRef, setImage } = useImageAdjustmentContext();
@@ -30,12 +31,14 @@ const UploadImage = () => {
       )}
       {processedImg && (
         <div className="flex w-full items-center justify-center bg-black">
-          <div className="flex h-[calc(100vh-var(--header-height)-200px)] w-full items-center justify-center md:h-[calc(100vh-var(--header-height))]">
-            <img
+          <div className="relative flex h-[calc(100vh-var(--header-height)-200px)] w-full items-center justify-center md:h-[calc(100vh-var(--header-height))]">
+            <Image
               ref={inputImgRef}
               alt="Processed image"
-              className="h-auto max-h-full"
+              className="h-auto max-h-full w-auto"
               src={processedImg}
+              width={400}
+              height={400}
             />
           </div>
         </div>

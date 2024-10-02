@@ -24,7 +24,7 @@ const ProcessedImage: React.FC<ProcessedImageProps> = ({ filter }) => {
       const img = cv.imread(imgElement);
       const imgProcessed = new cv.Mat();
       cv.cvtColor(img, imgProcessed, filter);
-      // @ts-ignore
+      // @typescript-eslint/ban-ts-comment
       cv.imshow(canvasElement, imgProcessed);
       imgProcessed.delete();
     }
