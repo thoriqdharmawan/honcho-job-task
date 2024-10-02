@@ -7,14 +7,17 @@ import type {
   SetStateAction,
 } from "react";
 import { createContext, useContext, useRef, useState } from "react";
+import { CropperRef } from "react-advanced-cropper";
 
 interface ImageState {
   imgUrl: string | null;
-  originalImgUrl: string | null;
+  processedImg: string | null;
+  originalImage: string | null;
 }
 
 interface ImageAdjustmentContextData {
   inputImgRef: MutableRefObject<HTMLImageElement | null>;
+  cropperRef: MutableRefObject<CropperRef | null>;
 
   action: IMAGE_ADJUSTMENT_ACTION_TYPES;
   setAction: Dispatch<SetStateAction<IMAGE_ADJUSTMENT_ACTION_TYPES>>;
@@ -43,17 +46,20 @@ function useImageAdjustmentContext(): ImageAdjustmentContextData {
 
 const ImageAdjustmentProvider = ({ children }: { children: ReactNode }) => {
   const inputImgRef = useRef<HTMLImageElement | null>(null);
+  const cropperRef = useRef<CropperRef>(null);
 
   const [action, setAction] = useState<IMAGE_ADJUSTMENT_ACTION_TYPES>("IDLE");
   const [image, setImage] = useState<ImageState>({
     imgUrl: null,
-    originalImgUrl: null,
+    processedImg: null,
+    originalImage: null,
   });
 
   return (
     <ImageAdjustmentContext.Provider
       value={{
         inputImgRef: inputImgRef,
+        cropperRef: cropperRef,
 
         action,
         setAction,
@@ -61,7 +67,7 @@ const ImageAdjustmentProvider = ({ children }: { children: ReactNode }) => {
         image,
         setImage,
 
-        isImageLoaded: !!image.originalImgUrl,
+        isImageLoaded: !!image.processedImg,
       }}
     >
       {children}

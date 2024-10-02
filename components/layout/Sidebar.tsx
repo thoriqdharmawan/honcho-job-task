@@ -3,7 +3,8 @@
 import { FC, ReactNode } from "react";
 import { Button } from "../ui/button";
 import { useImageAdjustmentContext } from "@/providers/ImageAdjustmentProvider";
-import FilterType from "../pages/filter/FilterType";
+import FilterConfig from "../pages/filter/FilterConfig";
+import CropConfig from "../pages/crop/CropConfig";
 
 type SidebarProps = {
   children: ReactNode;
@@ -14,13 +15,26 @@ const Sidebar: FC<SidebarProps> = ({ children }) => {
     useImageAdjustmentContext();
 
   const handleDiscard = () => {
-    setImage((prev) => ({ ...prev, imgUrl: prev.originalImgUrl }));
+    setImage((prev) => ({ ...prev, imgUrl: prev.processedImg }));
     setAction("IDLE");
   };
 
   const handleSave = () => {
-    setImage((prev) => ({ ...prev, originalImgUrl: prev.imgUrl }));
+    setImage((prev) => ({ ...prev, processedImg: prev.imgUrl }));
     setAction("IDLE");
+  };
+
+  const handleDeleteImage = () => {
+    setImage((prev) => ({ ...prev, imgUrl: null, processedImg: null }));
+    setAction("IDLE");
+  };
+
+  const handleResetImage = () => {
+    setImage((prev) => ({
+      ...prev,
+      processedImg: prev.originalImage,
+      imgUrl: prev.originalImage,
+    }));
   };
 
   return (
@@ -47,11 +61,19 @@ const Sidebar: FC<SidebarProps> = ({ children }) => {
             </div>
           )}
 
-          {action === "FILTER" && <FilterType />}
+          {action === "FILTER" && <FilterConfig />}
+          {action === "CROP" && <CropConfig />}
         </aside>
       )}
 
       {children}
+
+      {isImageLoaded && (
+        <aside className="sticky top-[var(--header-height)] z-50 flex h-[calc(100vh-var(--header-height))] w-[var(--sidebar-width)] flex-col justify-center gap-5 overflow-y-auto border-r px-4">
+          <Button onClick={handleDeleteImage}>Delete Image</Button>
+          <Button onClick={handleResetImage}>Reset to Original</Button>
+        </aside>
+      )}
     </div>
   );
 };

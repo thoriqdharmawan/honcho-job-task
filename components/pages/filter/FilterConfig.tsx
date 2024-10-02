@@ -1,8 +1,7 @@
-import { Button } from "@/components/ui/button";
 import ProcessedImage from "./ProcessedImage";
 import cv from "@techstark/opencv-js";
 
-const FilterType: React.FC = () => {
+const FilterConfig: React.FC = () => {
   return (
     <div className="flex flex-col gap-6 px-4">
       <ProcessedImage filter={cv.COLOR_BGR2HLS} />
@@ -12,4 +11,4 @@ const FilterType: React.FC = () => {
   );
 };
 
-export default FilterType;
+export default FilterConfig;

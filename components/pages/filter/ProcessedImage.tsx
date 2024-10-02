@@ -14,8 +14,7 @@ const ProcessedImage: React.FC<ProcessedImageProps> = ({ filter }) => {
     const imgElement = inputImgRef.current;
     const canvasElement = canvasRef.current;
 
-    if (imgElement && canvasElement) {
-      // Resize canvas based on parent width
+    if (imgElement && canvasElement && imgElement.complete) {
       const parentWidth = canvasElement.parentElement?.offsetWidth || 300;
       const aspectRatio = imgElement.naturalWidth / imgElement.naturalHeight;
 
@@ -32,18 +31,29 @@ const ProcessedImage: React.FC<ProcessedImageProps> = ({ filter }) => {
   }, [inputImgRef, filter]);
 
   useEffect(() => {
-    renderCanvas();
+    const imgElement = inputImgRef.current;
 
-    // Handle window resize
-    const handleResize = () => {
+    const handleImageLoad = () => {
       renderCanvas();
+
+      if (imgElement) {
+        imgElement.removeEventListener("load", handleImageLoad);
+      }
     };
 
-    window.addEventListener("resize", handleResize);
+    if (imgElement && !imgElement.complete) {
+      imgElement.addEventListener("load", handleImageLoad);
+    } else if (imgElement && imgElement.complete) {
+      // If the image is already loaded, render immediately
+      renderCanvas();
+    }
+
     return () => {
-      window.removeEventListener("resize", handleResize);
+      if (imgElement) {
+        imgElement.removeEventListener("load", handleImageLoad);
+      }
     };
-  }, [renderCanvas]);
+  }, [renderCanvas, inputImgRef]);
 
   const handleSelectFilter = (canvas: HTMLCanvasElement | null) => {
     if (canvas) {
