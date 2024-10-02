@@ -5,7 +5,6 @@ import {
   ArrowDownToLine,
   Crop,
   ListRestart,
-  RefreshCcw,
   SlidersHorizontal,
   Trash2,
 } from "lucide-react";
@@ -74,11 +73,6 @@ const ListMenu: FC = () => {
       label: "Crop",
       icon: <Crop className="mr-2 h-4 w-4" />,
       onClick: () => setAction("CROP"),
-    },
-    {
-      label: "Rotate",
-      icon: <RefreshCcw className="mr-2 h-4 w-4" />,
-      onClick: () => setAction("ROTATE"),
       className: "md:grow",
     },
     {
