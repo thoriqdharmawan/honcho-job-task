@@ -99,7 +99,7 @@ const ListMenu: FC = () => {
       className={cn(
         "overflow-x-auto py-4 md:overflow-y-hidden",
         "w-full md:w-[var(--sidebar-width)]",
-        "h-[--config-bottom-height] md:h-[calc(100vh-var(--header-height))]",
+        "h-[calc(--config-bottom-height+0.5rem)] md:h-[calc(100vh-var(--header-height))]",
       )}
     >
       <div className="flex h-full w-full flex-wrap gap-3 px-4 md:flex-col md:gap-3">
