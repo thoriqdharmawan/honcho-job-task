@@ -4,9 +4,10 @@ import { cn } from "@/lib/utils";
 
 type Props = {
   children: ReactNode;
+  className?: string;
 };
 
-const ConfigWrapper: FC<Props> = ({ children }) => {
+const ConfigWrapper: FC<Props> = ({ children, className }) => {
   return (
     <ScrollArea
       className={cn(
@@ -15,7 +16,9 @@ const ConfigWrapper: FC<Props> = ({ children }) => {
         "h-[--config-bottom-height] md:h-[calc(100vh-var(--header-height))]",
       )}
     >
-      <div className="flex w-full p-4 md:flex-col md:items-center">
+      <div
+        className={cn("flex w-full p-4 md:flex-col md:items-center", className)}
+      >
         {children}
       </div>
     </ScrollArea>

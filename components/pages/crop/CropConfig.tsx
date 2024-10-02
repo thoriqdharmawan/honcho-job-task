@@ -1,7 +1,5 @@
 import ConfigWrapper from "@/components/shared/ConfigWrapper";
 import { Button } from "@/components/ui/button";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { cn } from "@/lib/utils";
 import { useImageAdjustmentContext } from "@/providers/ImageAdjustmentProvider";
 import { FC } from "react";
 
@@ -23,7 +21,7 @@ const CropConfig: FC = () => {
   };
 
   return (
-    <ConfigWrapper>
+    <ConfigWrapper className="flex h-full w-full items-end justify-end">
       <Button onClick={handleCrop} className="w-full">
         Crop
       </Button>

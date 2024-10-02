@@ -3,6 +3,7 @@ import { cn } from "@/lib/utils";
 import { useImageAdjustmentContext } from "@/providers/ImageAdjustmentProvider";
 import {
   ArrowDownToLine,
+  Blend,
   Crop,
   ListRestart,
   SlidersHorizontal,
@@ -66,7 +67,7 @@ const ListMenu: FC = () => {
   const ACTIONS: ActionType[] = [
     {
       label: "Filter",
-      icon: <SlidersHorizontal className="mr-2 h-4 w-4" />,
+      icon: <Blend className="mr-2 h-4 w-4" />,
       onClick: () => setAction("FILTER"),
     },
     {
@@ -89,7 +90,7 @@ const ListMenu: FC = () => {
       label: "Reset to Original",
       icon: <ListRestart className="mr-2 h-4 w-4" />,
       onClick: handleResetImage,
-      variant: "ghost",
+      variant: "secondary",
     },
     {
       label: "Delete Image",

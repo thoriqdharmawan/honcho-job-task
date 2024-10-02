@@ -19,6 +19,7 @@ const Sidebar: FC<SidebarProps> = ({ children }) => {
     <div className="flex h-[calc(100dvh-var(--header-height))] flex-col justify-between md:flex-row md:gap-0">
       <div className="order-last flex flex-col md:order-first">
         {isImageLoaded && action === "IDLE" && <ListMenu />}
+
         {action === "FILTER" && <FilterConfig />}
         {action === "ADJUSTMENT" && <AdjustmentConfig />}
         {action === "CROP" && <CropConfig />}
