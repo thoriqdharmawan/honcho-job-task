@@ -3,6 +3,7 @@ import { cn } from "@/lib/utils";
 import { useImageAdjustmentContext } from "@/providers/ImageAdjustmentProvider";
 import {
   ArrowDownToLine,
+  Blend,
   Crop,
   ListRestart,
   SlidersHorizontal,
@@ -66,8 +67,13 @@ const ListMenu: FC = () => {
   const ACTIONS: ActionType[] = [
     {
       label: "Filter",
-      icon: <SlidersHorizontal className="mr-2 h-4 w-4" />,
+      icon: <Blend className="mr-2 h-4 w-4" />,
       onClick: () => setAction("FILTER"),
+    },
+    {
+      label: "Adjustment",
+      icon: <SlidersHorizontal className="mr-2 h-4 w-4" />,
+      onClick: () => setAction("ADJUSTMENT"),
     },
     {
       label: "Crop",
@@ -84,7 +90,7 @@ const ListMenu: FC = () => {
       label: "Reset to Original",
       icon: <ListRestart className="mr-2 h-4 w-4" />,
       onClick: handleResetImage,
-      variant: "ghost",
+      variant: "secondary",
     },
     {
       label: "Delete Image",
@@ -99,7 +105,7 @@ const ListMenu: FC = () => {
       className={cn(
         "overflow-x-auto py-4 md:overflow-y-hidden",
         "w-full md:w-[var(--sidebar-width)]",
-        "h-[--config-bottom-height] md:h-[calc(100vh-var(--header-height))]",
+        "h-[calc(--config-bottom-height+0.5rem)] md:h-[calc(100vh-var(--header-height))]",
       )}
     >
       <div className="flex h-full w-full flex-wrap gap-3 px-4 md:flex-col md:gap-3">

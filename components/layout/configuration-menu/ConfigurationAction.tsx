@@ -4,16 +4,34 @@ import { useImageAdjustmentContext } from "@/providers/ImageAdjustmentProvider";
 import React, { FC } from "react";
 
 const ConfigurationAction: FC = () => {
-  const { setAction, setImage } = useImageAdjustmentContext();
+  const { action, setAction, setImage, adjustmentRef, handleResetAdjustment } =
+    useImageAdjustmentContext();
 
   const handleDiscard = () => {
+    handleResetAdjustment();
     setImage((prev) => ({ ...prev, imgUrl: prev.processedImg }));
     setAction("IDLE");
   };
 
   const handleSave = () => {
-    setImage((prev) => ({ ...prev, processedImg: prev.imgUrl }));
     setAction("IDLE");
+
+    if (action === "ADJUSTMENT") {
+      handleApplyAdjustment();
+      return;
+    }
+
+    setImage((prev) => ({ ...prev, processedImg: prev.imgUrl }));
+  };
+
+  const handleApplyAdjustment = () => {
+    const canvasAdjustment = adjustmentRef.current;
+
+    if (canvasAdjustment) {
+      const image = canvasAdjustment.toDataURL("image/png");
+      setImage((prev) => ({ ...prev, processedImg: image, imgUrl: image }));
+      handleResetAdjustment();
+    }
   };
 
   return (

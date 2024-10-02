@@ -16,9 +16,17 @@ interface ImageState {
   originalImage: string | null;
 }
 
+interface AdjustmentState {
+  brightness: number;
+  saturation: number;
+  hue: number;
+  contrast: number;
+}
+
 interface ImageAdjustmentContextData {
   inputImgRef: MutableRefObject<HTMLImageElement | null>;
   cropperRef: MutableRefObject<CropperRef | null>;
+  adjustmentRef: MutableRefObject<HTMLCanvasElement | null>;
 
   action: IMAGE_ADJUSTMENT_ACTION_TYPES;
   setAction: Dispatch<SetStateAction<IMAGE_ADJUSTMENT_ACTION_TYPES>>;
@@ -30,7 +38,24 @@ interface ImageAdjustmentContextData {
 
   cropOffset: number;
   setCropOffset: Dispatch<SetStateAction<number>>;
+
+  adjustment: AdjustmentState;
+  setAdjustment: Dispatch<SetStateAction<AdjustmentState>>;
+  handleResetAdjustment: () => void;
 }
+
+const DEFAULT_IMAGE_STATE = {
+  imgUrl: null,
+  processedImg: null,
+  originalImage: null,
+};
+
+const DEFAULT_ADJUSTMENT_STATE = {
+  brightness: 0,
+  saturation: 0,
+  hue: 0,
+  contrast: 0,
+};
 
 const ImageAdjustmentContext = createContext<
   ImageAdjustmentContextData | undefined
@@ -41,7 +66,7 @@ function useImageAdjustmentContext(): ImageAdjustmentContextData {
 
   if (!context) {
     throw new Error(
-      "useImageAdjustmentContext must be used within a BranchProvider",
+      "useImageAdjustmentContext must be used within a ImageAdjustmentProvider",
     );
   }
 
@@ -51,20 +76,31 @@ function useImageAdjustmentContext(): ImageAdjustmentContextData {
 const ImageAdjustmentProvider = ({ children }: { children: ReactNode }) => {
   const inputImgRef = useRef<HTMLImageElement | null>(null);
   const cropperRef = useRef<CropperRef>(null);
+  const adjustmentRef = useRef<HTMLCanvasElement>(null);
 
   const [action, setAction] = useState<IMAGE_ADJUSTMENT_ACTION_TYPES>("IDLE");
-  const [image, setImage] = useState<ImageState>({
-    imgUrl: null,
-    processedImg: null,
-    originalImage: null,
-  });
+  const [image, setImage] = useState<ImageState>(DEFAULT_IMAGE_STATE);
   const [cropOffset, setCropOffset] = useState<number>(200);
+  const [adjustment, setAdjustment] = useState<AdjustmentState>(
+    DEFAULT_ADJUSTMENT_STATE,
+  );
+
+  const handleResetAdjustment = () => {
+    setAdjustment((prev) => ({
+      ...prev,
+      brightness: 0,
+      contrast: 0,
+      hue: 0,
+      saturation: 0,
+    }));
+  };
 
   return (
     <ImageAdjustmentContext.Provider
       value={{
-        inputImgRef: inputImgRef,
-        cropperRef: cropperRef,
+        inputImgRef,
+        cropperRef,
+        adjustmentRef,
 
         action,
         setAction,
@@ -76,6 +112,10 @@ const ImageAdjustmentProvider = ({ children }: { children: ReactNode }) => {
 
         cropOffset,
         setCropOffset,
+
+        adjustment,
+        setAdjustment,
+        handleResetAdjustment,
       }}
     >
       {children}

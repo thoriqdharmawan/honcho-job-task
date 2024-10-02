@@ -1,1 +1,5 @@
-export type IMAGE_ADJUSTMENT_ACTION_TYPES = "FILTER" | "CROP" | "IDLE";
+export type IMAGE_ADJUSTMENT_ACTION_TYPES =
+  | "FILTER"
+  | "CROP"
+  | "ADJUSTMENT"
+  | "IDLE";
