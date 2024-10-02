@@ -51,7 +51,7 @@ const ProcessImage: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col gap-5">
       <div>
         <span style={{ marginRight: "10px" }}>Select an image file:</span>
         <input
@@ -63,10 +63,8 @@ const ProcessImage: React.FC = () => {
       </div>
 
       {imgUrl && (
-        <div className="images-container">
-          <div className="image-card">
-            <img ref={inputImgRef} alt="Original input" src={imgUrl} />
-          </div>
+        <div className="flex items-center justify-center">
+          <img ref={inputImgRef} alt="Original input" src={imgUrl} />
         </div>
       )}
     </div>
