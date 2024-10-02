@@ -1,13 +1,9 @@
 import React, { useEffect } from "react";
 import cv from "@techstark/opencv-js";
-import ProcessedImage from "./ProcessedImage";
 import { useImageAdjustmentContext } from "@/providers/ImageAdjustmentProvider";
-import { Button } from "./ui/button";
 
 const ProcessImage: React.FC = () => {
-  const { action, setAction, image, inputImgRef, setImage, isImageLoaded } =
-    useImageAdjustmentContext();
-
+  const { image, inputImgRef, setImage } = useImageAdjustmentContext();
   const { imgUrl, originalImgUrl } = image;
 
   useEffect(() => {
@@ -68,34 +64,9 @@ const ProcessImage: React.FC = () => {
 
       {imgUrl && (
         <div className="images-container">
-          <div style={{ marginTop: "20px" }}>
-            {isImageLoaded && (
-              <Button onClick={() => setAction("FILTER")}>Filter Image</Button>
-            )}
-            {isImageLoaded && (
-              <Button onClick={() => setAction("IDLE")}>
-                Close filter Image
-              </Button>
-            )}
-            <Button onClick={downloadImage} style={{ marginLeft: "10px" }}>
-              Download
-            </Button>
-            <Button onClick={resetImage} style={{ marginLeft: "10px" }}>
-              Reset Filter
-            </Button>
-          </div>
-
           <div className="image-card">
             <img ref={inputImgRef} alt="Original input" src={imgUrl} />
           </div>
-
-          {action === "FILTER" && (
-            <div className="flex">
-              <ProcessedImage filter={cv.COLOR_BGR2HLS} />
-              <ProcessedImage filter={cv.COLOR_BGR2Luv} />
-              <ProcessedImage filter={cv.COLOR_BGR2XYZ} />
-            </div>
-          )}
         </div>
       )}
     </div>
