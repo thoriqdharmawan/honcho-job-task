@@ -1,4 +1,4 @@
-import ProcessedImage from "./ProcessedImage";
+import ProcessedImage from "./FilterProcessedImage";
 import {
   COLOR_BGR2XYZ,
   COLOR_BGR2GRAY,

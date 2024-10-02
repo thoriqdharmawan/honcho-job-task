@@ -1,7 +1,7 @@
 "use client";
 
 import CropProcessImage from "@/components/pages/crop/CropProcessImage";
-import ProcessImage from "@/components/pages/filter/ProcessImage";
+import ProcessImage from "@/components/pages/filter/FilterProcessImage";
 import UploadImage from "@/components/pages/upload-image/UploadImage";
 import { useImageAdjustmentContext } from "@/providers/ImageAdjustmentProvider";
 
