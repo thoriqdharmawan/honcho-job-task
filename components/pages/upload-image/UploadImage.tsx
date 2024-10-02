@@ -31,12 +31,14 @@ const UploadImage = () => {
       )}
       {processedImg && (
         <div className="flex w-full items-center justify-center bg-black">
-          <img
-            ref={inputImgRef}
-            alt="Original input"
-            className="h-[calc(100vh-var(--header-height))]"
-            src={processedImg}
-          />
+          <div className="flex h-[calc(100vh-var(--header-height)-200px)] w-full items-center justify-center md:h-[calc(100vh-var(--header-height))]">
+            <img
+              ref={inputImgRef}
+              alt="Processed image"
+              className="h-auto max-h-full"
+              src={processedImg}
+            />
+          </div>
         </div>
       )}
     </div>

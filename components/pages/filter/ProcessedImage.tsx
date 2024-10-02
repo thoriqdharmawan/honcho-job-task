@@ -63,11 +63,13 @@ const ProcessedImage: React.FC<ProcessedImageProps> = ({ filter }) => {
   };
 
   return (
-    <canvas
-      ref={canvasRef}
-      onClick={() => handleSelectFilter(canvasRef.current)}
-      className="w-full cursor-pointer"
-    />
+    <div className="flex w-fit items-center justify-center md:max-h-60">
+      <canvas
+        ref={canvasRef}
+        onClick={() => handleSelectFilter(canvasRef.current)}
+        className="max-h-[--config-bottom-height] w-auto cursor-pointer p-4 md:h-auto md:max-h-60 md:w-full md:p-0 md:py-3"
+      />
+    </div>
   );
 };
 

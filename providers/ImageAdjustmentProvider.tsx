@@ -67,7 +67,7 @@ const ImageAdjustmentProvider = ({ children }: { children: ReactNode }) => {
         image,
         setImage,
 
-        isImageLoaded: !!image.processedImg,
+        isImageLoaded: !!image.originalImage,
       }}
     >
       {children}
