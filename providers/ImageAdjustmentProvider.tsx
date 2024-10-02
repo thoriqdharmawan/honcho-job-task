@@ -26,6 +26,9 @@ interface ImageAdjustmentContextData {
   setImage: Dispatch<SetStateAction<ImageState>>;
 
   isImageLoaded: boolean;
+
+  cropOffset: number;
+  setCropOffset: Dispatch<SetStateAction<number>>;
 }
 
 const ImageAdjustmentContext = createContext<
@@ -54,6 +57,7 @@ const ImageAdjustmentProvider = ({ children }: { children: ReactNode }) => {
     processedImg: null,
     originalImage: null,
   });
+  const [cropOffset, setCropOffset] = useState<number>(200)
 
   return (
     <ImageAdjustmentContext.Provider
@@ -68,6 +72,9 @@ const ImageAdjustmentProvider = ({ children }: { children: ReactNode }) => {
         setImage,
 
         isImageLoaded: !!image.originalImage,
+
+        cropOffset,
+        setCropOffset,
       }}
     >
       {children}

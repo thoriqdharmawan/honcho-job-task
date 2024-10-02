@@ -20,10 +20,12 @@ type ActionType = {
 };
 
 const ListMenu: FC = () => {
-  const { setAction, setImage, inputImgRef } = useImageAdjustmentContext();
+  const { setAction, setImage, inputImgRef, setCropOffset } =
+    useImageAdjustmentContext();
 
   const handleDeleteImage = () => {
     setAction("IDLE");
+    setCropOffset(200);
     setImage((prev) => ({
       ...prev,
       imgUrl: null,
@@ -33,6 +35,7 @@ const ListMenu: FC = () => {
   };
 
   const handleResetImage = () => {
+    setCropOffset(200);
     setImage((prev) => ({
       ...prev,
       processedImg: prev.originalImage,

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import cv from "@techstark/opencv-js";
 import { useImageAdjustmentContext } from "@/providers/ImageAdjustmentProvider";
 

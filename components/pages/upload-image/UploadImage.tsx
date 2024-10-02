@@ -7,7 +7,6 @@ const UploadImage = () => {
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       const fileUrl = URL.createObjectURL(e.target.files[0]);
-
       setImage((prev) => ({
         ...prev,
         processedImg: fileUrl,
