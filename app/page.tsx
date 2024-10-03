@@ -9,19 +9,16 @@ import { useImageAdjustmentContext } from "@/providers/ImageAdjustmentProvider";
 export default function Home() {
   const { action } = useImageAdjustmentContext();
 
-  if (action === "IDLE") {
-    return <UploadImage />;
-  }
-
-  if (action === "FILTER") {
-    return <ProcessImage />;
-  }
-
-  if (action === "ADJUSTMENT") {
-    return <AdjustmentProcessImage />;
-  }
-
-  if (action === "CROP") {
-    return <CropProcessImage />;
+  switch (action) {
+    case "IDLE":
+      return <UploadImage />;
+    case "FILTER":
+      return <ProcessImage />;
+    case "ADJUSTMENT":
+      return <AdjustmentProcessImage />;
+    case "CROP":
+      return <CropProcessImage />;
+    default:
+      break;
   }
 }
