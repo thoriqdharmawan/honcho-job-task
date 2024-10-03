@@ -2,6 +2,9 @@
 
 Welcome to the **Honcho Job Task** project! This project is a web application built with **Next.js**, **React**, and **Tailwind CSS**, designed for image adjustment and processing using **OpenCV.js**. It provides an intuitive interface for uploading, adjusting, and downloading images with various filters and effects.
 
+![demo](https://github.com/user-attachments/assets/52bf4b47-03d5-435f-abf0-deecd0aae2b6)
+
+
 ## Features ✨
 
 - 📤 **Upload images** with drag-and-drop support.
