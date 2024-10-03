@@ -16,11 +16,7 @@ type Props = {
 const RootLayout: FC<Props> = ({ children }: Readonly<Props>) => {
   return (
     <ImageAdjustmentProvider>
-      <ComponentProvider>
-        <main className="flex h-full w-full flex-col md:max-w-[calc(100vw-var(--sidebar-width))]">
-          {children}
-        </main>
-      </ComponentProvider>
+      <ComponentProvider>{children}</ComponentProvider>
     </ImageAdjustmentProvider>
   );
 };

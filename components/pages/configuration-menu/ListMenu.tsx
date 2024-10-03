@@ -134,6 +134,7 @@ const ListMenu: FC = () => {
   ];
 
   const handleClickConfirmationPrimary = () => {
+    setDialogConfirmation((prev) => ({ ...prev, open: false }));
     switch (dialogConfirmation.type) {
       case "DELETE_IMAGE":
         handleDeleteImage();

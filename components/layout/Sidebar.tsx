@@ -15,10 +15,18 @@ type SidebarProps = {
 const Sidebar: FC<SidebarProps> = ({ children }) => {
   const { action, isImageLoaded } = useImageAdjustmentContext();
 
+  if (!isImageLoaded) {
+    return (
+      <main className="h-[calc(100dvh-var(--header-height))] w-full">
+        {children}
+      </main>
+    );
+  }
+
   return (
     <div className="flex h-[calc(100dvh-var(--header-height))] flex-col justify-between md:flex-row md:gap-0">
       <div className="order-last flex flex-col md:order-first">
-        {isImageLoaded && action === "IDLE" && <ListMenu />}
+        {action === "IDLE" && <ListMenu />}
 
         {action === "FILTER" && <FilterConfig />}
         {action === "ADJUSTMENT" && <AdjustmentConfig />}
@@ -27,7 +35,9 @@ const Sidebar: FC<SidebarProps> = ({ children }) => {
         {action !== "IDLE" && <ConfigurationAction />}
       </div>
 
-      {children}
+      <main className="flex h-full w-full flex-col md:max-w-[calc(100vw-var(--sidebar-width))]">
+        {children}
+      </main>
     </div>
   );
 };

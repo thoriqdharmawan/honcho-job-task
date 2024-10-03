@@ -1,53 +1,104 @@
+import { cn } from "@/lib/utils";
 import { useImageAdjustmentContext } from "@/providers/ImageAdjustmentProvider";
+import { ArrowUpToLine } from "lucide-react";
 import Image from "next/image";
+import { useState } from "react";
+
+const MAX_FILE_SIZE = 2 * 1024 * 1024; // 2MB in bytes
 
 const UploadImage = () => {
   const { image, inputImgRef, setImage } = useImageAdjustmentContext();
   const { processedImg } = image;
+  const [dragging, setDragging] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const handleFileUpload = (file: File) => {
+    if (file.size > MAX_FILE_SIZE) {
+      setError("File size exceeds 2MB.");
+      return;
+    }
+
+    const fileUrl = URL.createObjectURL(file);
+
+    setImage((prev) => ({
+      ...prev,
+      processedImg: fileUrl,
+      imgUrl: fileUrl,
+      originalImage: fileUrl,
+      meta: {
+        name: file.name,
+        size: file.size,
+      },
+    }));
+
+    setError(null);
+  };
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
-      const file = e.target.files[0];
-      const fileUrl = URL.createObjectURL(file);
-      console.log("file.type ", file);
-
-      setImage((prev) => ({
-        ...prev,
-        processedImg: fileUrl,
-        imgUrl: fileUrl,
-        originalImage: fileUrl,
-        meta: {
-          name: file.name,
-          size: file.size,
-        },
-      }));
-
+      handleFileUpload(e.target.files[0]);
       e.target.value = "";
     }
   };
 
+  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    setDragging(true);
+  };
+
+  const handleDragLeave = () => {
+    setDragging(false);
+  };
+
+  const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    setDragging(false);
+    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+      handleFileUpload(e.dataTransfer.files[0]);
+    }
+  };
+
   return (
-    <div className="flex w-full flex-col items-center justify-center">
+    <div className="flex h-full w-full flex-col items-center justify-center">
       {!processedImg && (
-        <input
-          type="file"
-          name="file"
-          accept="image/*"
-          onChange={handleImageUpload}
-        />
+        <div
+          className={cn(
+            "flex h-full w-full items-center justify-center rounded-lg border-4 border-dashed p-6 text-center transition-colors duration-300 ease-in-out",
+            {
+              "border-white bg-gray-700": dragging,
+              "border-gray-500 bg-gray-800": !dragging,
+            },
+          )}
+          onDragOver={handleDragOver}
+          onDragLeave={handleDragLeave}
+          onDrop={handleDrop}
+        >
+          <div>
+            <ArrowUpToLine className="mx-auto mb-4 h-12 w-12 text-gray-200" />
+            <p className="mb-2 text-gray-300">Drag & drop an image here</p>
+            <p className="mb-4 text-gray-300">or</p>
+            <label className="cursor-pointer rounded-lg bg-gray-600 px-4 py-2 text-gray-200 hover:bg-gray-500">
+              Select Image
+              <input
+                type="file"
+                className="hidden"
+                accept="image/*"
+                onChange={handleImageUpload}
+              />
+            </label>
+            {error && <p className="mt-4 text-sm text-red-500">{error}</p>}
+          </div>
+        </div>
       )}
       {processedImg && (
-        <div className="flex w-full items-center justify-center bg-black">
-          <div className="relative flex h-[calc(100vh-var(--header-height)-200px)] w-full items-center justify-center md:h-[calc(100vh-var(--header-height))]">
-            <Image
-              ref={inputImgRef}
-              alt="Processed image"
-              className="h-auto max-h-full w-auto"
-              src={processedImg}
-              width={400}
-              height={400}
-            />
-          </div>
+        <div className="relative flex h-full w-full items-center justify-center bg-gray-900">
+          <Image
+            ref={inputImgRef}
+            alt="Processed image"
+            className="h-full w-full object-contain"
+            src={processedImg}
+            layout="fill"
+          />
         </div>
       )}
     </div>
