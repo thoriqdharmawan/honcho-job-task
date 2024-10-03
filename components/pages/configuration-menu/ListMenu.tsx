@@ -1,7 +1,10 @@
 import DialogConfirmation from "@/components/shared/DialogConfirmation";
 import { Button, ButtonProps } from "@/components/ui/button";
 import { DEFAULT_DIALOG_CONFIRMATION } from "@/constant/global";
-import type { DIALOG_CONFIRMATION_TYPE } from "@/lib/global.types";
+import type {
+  DIALOG_CONFIRMATION_TYPE,
+  IMAGE_FORMAT,
+} from "@/lib/global.types";
 import { cn } from "@/lib/utils";
 import { useImageAdjustmentContext } from "@/providers/ImageAdjustmentProvider";
 import {
@@ -58,7 +61,10 @@ const ListMenu: FC = () => {
     }));
   };
 
-  const handleDownloadImage = () => {
+  const handleDownloadImage = (
+    fileName: string = "image",
+    format: IMAGE_FORMAT = "png",
+  ) => {
     const imgElement = inputImgRef.current;
 
     const canvas = document.createElement("canvas");
@@ -69,12 +75,14 @@ const ListMenu: FC = () => {
       canvas.height = imgElement.naturalHeight;
 
       context.drawImage(imgElement, 0, 0);
+      const mimeType = `image/${format}`;
 
-      const image = canvas.toDataURL("image/png");
+      const image = canvas.toDataURL(mimeType);
 
       const link = document.createElement("a");
       link.href = image;
-      link.download = "original-image.png";
+
+      link.download = `${fileName}.${format}`;
       link.click();
     }
   };

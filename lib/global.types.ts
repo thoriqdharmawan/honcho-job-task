@@ -8,3 +8,5 @@ export type DIALOG_CONFIRMATION_TYPE =
   | "DISCARD"
   | "RESET_TO_ORIGINAL"
   | "DELETE_IMAGE";
+
+export type IMAGE_FORMAT = "png" | "jpeg" | "webp";
