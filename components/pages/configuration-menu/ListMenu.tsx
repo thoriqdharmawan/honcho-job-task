@@ -2,10 +2,7 @@ import DialogConfirmation from "@/components/shared/DialogConfirmation";
 import DownloadImage from "@/components/shared/DownloadImage";
 import { Button, ButtonProps } from "@/components/ui/button";
 import { DEFAULT_DIALOG_CONFIRMATION } from "@/constant/global";
-import type {
-  DIALOG_CONFIRMATION_TYPE,
-  IMAGE_FORMAT,
-} from "@/lib/global.types";
+import type { DIALOG_CONFIRMATION_TYPE } from "@/lib/global.types";
 import { cn } from "@/lib/utils";
 import { useImageAdjustmentContext } from "@/providers/ImageAdjustmentProvider";
 import {
@@ -15,6 +12,8 @@ import {
   ListRestart,
   SlidersHorizontal,
   Trash2,
+  Github,
+  Linkedin,
 } from "lucide-react";
 import { FC, ReactNode, useState } from "react";
 
@@ -148,6 +147,10 @@ const ListMenu: FC = () => {
     }
   };
 
+  const handleRedirect = (url: string) => {
+    window.open(url, "_blank");
+  };
+
   return (
     <div
       className={cn(
@@ -169,6 +172,30 @@ const ListMenu: FC = () => {
             </Button>
           </div>
         ))}
+        <div className="flex w-full gap-3">
+          <Button
+            onClick={() =>
+              handleRedirect(
+                "https://github.com/thoriqdharmawan/honcho-job-task",
+              )
+            }
+            className="grow"
+            variant="outline"
+            size="icon"
+          >
+            <Github className="h-4 w-4" />
+          </Button>
+          <Button
+            onClick={() =>
+              handleRedirect("https://www.linkedin.com/in/thoriqdharmawan/")
+            }
+            className="grow"
+            variant="outline"
+            size="icon"
+          >
+            <Linkedin className="h-4 w-4" />
+          </Button>
+        </div>
       </div>
 
       <DialogConfirmation
