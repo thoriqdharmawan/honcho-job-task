@@ -3,3 +3,8 @@ export type IMAGE_ADJUSTMENT_ACTION_TYPES =
   | "CROP"
   | "ADJUSTMENT"
   | "IDLE";
+
+export type DIALOG_CONFIRMATION_TYPE =
+  | "DISCARD"
+  | "RESET_TO_ORIGINAL"
+  | "DELETE_IMAGE";

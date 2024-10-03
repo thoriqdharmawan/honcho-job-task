@@ -1,4 +1,7 @@
+import DialogConfirmation from "@/components/shared/DialogConfirmation";
 import { Button, ButtonProps } from "@/components/ui/button";
+import { DEFAULT_DIALOG_CONFIRMATION } from "@/constant/global";
+import type { DIALOG_CONFIRMATION_TYPE } from "@/lib/global.types";
 import { cn } from "@/lib/utils";
 import { useImageAdjustmentContext } from "@/providers/ImageAdjustmentProvider";
 import {
@@ -9,7 +12,7 @@ import {
   SlidersHorizontal,
   Trash2,
 } from "lucide-react";
-import { FC, ReactNode } from "react";
+import { FC, ReactNode, useState } from "react";
 
 type ActionType = {
   label: string;
@@ -17,11 +20,23 @@ type ActionType = {
   onClick: () => void;
   className?: string;
   variant?: ButtonProps["variant"];
+  type?: DIALOG_CONFIRMATION_TYPE;
+};
+
+type DialogConfirmationState = {
+  open: boolean;
+  type: DIALOG_CONFIRMATION_TYPE;
 };
 
 const ListMenu: FC = () => {
   const { setAction, setImage, inputImgRef, setCropOffset } =
     useImageAdjustmentContext();
+
+  const [dialogConfirmation, setDialogConfirmation] =
+    useState<DialogConfirmationState>({
+      open: false,
+      type: "RESET_TO_ORIGINAL",
+    });
 
   const handleDeleteImage = () => {
     setAction("IDLE");
@@ -87,18 +102,26 @@ const ListMenu: FC = () => {
       onClick: handleDownloadImage,
     },
     {
-      label: "Reset to Original",
+      label: "Reset to original",
       icon: <ListRestart className="mr-2 h-4 w-4" />,
-      onClick: handleResetImage,
+      onClick: () => {
+        setDialogConfirmation({ open: true, type: "RESET_TO_ORIGINAL" });
+      },
       variant: "secondary",
+      type: "RESET_TO_ORIGINAL",
     },
     {
       label: "Delete Image",
       icon: <Trash2 className="mr-2 h-4 w-4" />,
-      onClick: handleDeleteImage,
+      onClick: () => {
+        setDialogConfirmation({ open: true, type: "DELETE_IMAGE" });
+      },
       variant: "ghost",
+      type: "DELETE_IMAGE",
     },
   ];
+
+  const handleClickConfirmationPrimary = () => {};
 
   return (
     <div
@@ -122,6 +145,21 @@ const ListMenu: FC = () => {
           </div>
         ))}
       </div>
+
+      <DialogConfirmation
+        open={dialogConfirmation.open}
+        onOpenChange={(open) => {
+          setDialogConfirmation((prev) => ({ ...prev, open }));
+        }}
+        title={DEFAULT_DIALOG_CONFIRMATION[dialogConfirmation.type].title}
+        description={
+          DEFAULT_DIALOG_CONFIRMATION[dialogConfirmation.type].description
+        }
+        onClickPrimary={handleClickConfirmationPrimary}
+        onClickSecondary={() =>
+          setDialogConfirmation((prev) => ({ ...prev, open: false }))
+        }
+      />
     </div>
   );
 };
