@@ -49,3 +49,6 @@ export const IMAGE_FORMAT_OPTIONS: ImageFormatOption[] = [
     label: "WEBP",
   },
 ];
+
+
+export const MAX_FILE_SIZE = 2 * 1024 * 1024; // 2MB in bytes

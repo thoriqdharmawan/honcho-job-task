@@ -1,10 +1,9 @@
+import { MAX_FILE_SIZE } from "@/constant/global";
 import { cn } from "@/lib/utils";
 import { useImageAdjustmentContext } from "@/providers/ImageAdjustmentProvider";
 import { ArrowUpToLine } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
-
-const MAX_FILE_SIZE = 2 * 1024 * 1024; // 2MB in bytes
 
 const UploadImage = () => {
   const { image, inputImgRef, setImage } = useImageAdjustmentContext();
@@ -26,7 +25,7 @@ const UploadImage = () => {
       imgUrl: fileUrl,
       originalImage: fileUrl,
       meta: {
-        name: file.name,
+        name: file.name.split(".")?.slice(0, -1)?.join("."),
         size: file.size,
       },
     }));
@@ -65,8 +64,8 @@ const UploadImage = () => {
           className={cn(
             "flex h-full w-full items-center justify-center rounded-lg border-4 border-dashed p-6 text-center transition-colors duration-300 ease-in-out",
             {
-              "border-white bg-gray-700": dragging,
-              "border-gray-500 bg-gray-800": !dragging,
+              "border-white bg-gray-900": dragging,
+              "border-gray-500 bg-black": !dragging,
             },
           )}
           onDragOver={handleDragOver}
@@ -91,7 +90,7 @@ const UploadImage = () => {
         </div>
       )}
       {processedImg && (
-        <div className="relative flex h-full w-full items-center justify-center bg-gray-900">
+        <div className="relative flex h-full w-full items-center justify-center bg-black">
           <Image
             ref={inputImgRef}
             alt="Processed image"

@@ -21,8 +21,8 @@ const ProcessImage: React.FC = () => {
           alt="Processed image"
           className="h-auto max-h-full w-auto"
           src={imgUrl || ""}
-          width={400}
-          height={400}
+          width={720}
+          height={720}
         />
       </div>
     </div>
