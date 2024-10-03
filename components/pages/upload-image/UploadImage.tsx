@@ -12,6 +12,11 @@ const UploadImage = () => {
   const [error, setError] = useState<string | null>(null);
 
   const handleFileUpload = (file: File) => {
+    if (!file.type.startsWith("image/")) {
+      setError("Please upload a valid image file.");
+      return;
+    }
+
     if (file.size > MAX_FILE_SIZE) {
       setError("File size exceeds 2MB.");
       return;
@@ -85,7 +90,7 @@ const UploadImage = () => {
                 onChange={handleImageUpload}
               />
             </label>
-            {error && <p className="mt-4 text-sm text-red-500">{error}</p>}
+            {error && <p className="mt-4 text-sm text-destructive">{error}</p>}
           </div>
         </div>
       )}
