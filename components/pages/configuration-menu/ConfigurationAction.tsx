@@ -57,6 +57,7 @@ const ConfigurationAction: FC = () => {
         description={DEFAULT_DIALOG_CONFIRMATION.DISCARD.description}
         onClickPrimary={handleDiscard}
         onClickSecondary={() => setOpenDiscard(false)}
+        textPrimary={DEFAULT_DIALOG_CONFIRMATION.DISCARD.textPrimary}
       />
     </div>
   );

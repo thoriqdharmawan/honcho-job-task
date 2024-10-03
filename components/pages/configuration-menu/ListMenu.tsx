@@ -121,7 +121,19 @@ const ListMenu: FC = () => {
     },
   ];
 
-  const handleClickConfirmationPrimary = () => {};
+  const handleClickConfirmationPrimary = () => {
+    switch (dialogConfirmation.type) {
+      case "DELETE_IMAGE":
+        handleDeleteImage();
+        break;
+      case "RESET_TO_ORIGINAL":
+        handleResetImage();
+        break;
+
+      default:
+        break;
+    }
+  };
 
   return (
     <div
@@ -156,8 +168,11 @@ const ListMenu: FC = () => {
           DEFAULT_DIALOG_CONFIRMATION[dialogConfirmation.type].description
         }
         onClickPrimary={handleClickConfirmationPrimary}
-        onClickSecondary={() =>
-          setDialogConfirmation((prev) => ({ ...prev, open: false }))
+        onClickSecondary={() => {
+          setDialogConfirmation((prev) => ({ ...prev, open: false }));
+        }}
+        textPrimary={
+          DEFAULT_DIALOG_CONFIRMATION[dialogConfirmation.type].textPrimary
         }
       />
     </div>

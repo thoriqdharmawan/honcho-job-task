@@ -41,7 +41,7 @@ const DialogConfirmation: FC<DialogConfirmationProps> = (props) => {
           <DialogDescription>{description}</DialogDescription>
         </DialogHeader>
         <DialogFooter className="mt-3">
-          <DialogClose className="flex gap-3">
+          <DialogClose className="flex justify-center gap-3 md:justify-end">
             <Button variant="secondary" onClick={onClickSecondary}>
               {textSecondary || "Cancel"}
             </Button>
