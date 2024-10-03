@@ -1,4 +1,5 @@
 import DialogConfirmation from "@/components/shared/DialogConfirmation";
+import DownloadImage from "@/components/shared/DownloadImage";
 import { Button, ButtonProps } from "@/components/ui/button";
 import { DEFAULT_DIALOG_CONFIRMATION } from "@/constant/global";
 import type {
@@ -35,6 +36,8 @@ const ListMenu: FC = () => {
   const { setAction, setImage, inputImgRef, setCropOffset } =
     useImageAdjustmentContext();
 
+  const [openDownload, setOpenDownload] = useState<boolean>(false);
+
   const [dialogConfirmation, setDialogConfirmation] =
     useState<DialogConfirmationState>({
       open: false,
@@ -61,10 +64,11 @@ const ListMenu: FC = () => {
     }));
   };
 
-  const handleDownloadImage = (
-    fileName: string = "image",
-    format: IMAGE_FORMAT = "png",
-  ) => {
+  const handleDownloadImage = (values: {
+    format: string;
+    filename: string;
+  }) => {
+    const { format, filename } = values;
     const imgElement = inputImgRef.current;
 
     const canvas = document.createElement("canvas");
@@ -82,7 +86,7 @@ const ListMenu: FC = () => {
       const link = document.createElement("a");
       link.href = image;
 
-      link.download = `${fileName}.${format}`;
+      link.download = `${filename}.${format}`;
       link.click();
     }
   };
@@ -107,7 +111,7 @@ const ListMenu: FC = () => {
     {
       label: "Download Image",
       icon: <ArrowDownToLine className="mr-2 h-4 w-4" />,
-      onClick: handleDownloadImage,
+      onClick: () => setOpenDownload(true),
     },
     {
       label: "Reset to original",
@@ -182,6 +186,12 @@ const ListMenu: FC = () => {
         textPrimary={
           DEFAULT_DIALOG_CONFIRMATION[dialogConfirmation.type].textPrimary
         }
+      />
+
+      <DownloadImage
+        open={openDownload}
+        onOpenChange={setOpenDownload}
+        onDownload={handleDownloadImage}
       />
     </div>
   );

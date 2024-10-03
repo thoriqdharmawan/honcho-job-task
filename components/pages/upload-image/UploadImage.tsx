@@ -7,12 +7,19 @@ const UploadImage = () => {
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
-      const fileUrl = URL.createObjectURL(e.target.files[0]);
+      const file = e.target.files[0];
+      const fileUrl = URL.createObjectURL(file);
+      console.log("file.type ", file);
+
       setImage((prev) => ({
         ...prev,
         processedImg: fileUrl,
         imgUrl: fileUrl,
         originalImage: fileUrl,
+        meta: {
+          name: file.name,
+          size: file.size,
+        },
       }));
 
       e.target.value = "";

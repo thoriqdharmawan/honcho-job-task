@@ -14,6 +14,10 @@ interface ImageState {
   imgUrl: string | null;
   processedImg: string | null;
   originalImage: string | null;
+  meta: {
+    name: string;
+    size: number;
+  };
 }
 
 interface AdjustmentState {
@@ -48,6 +52,10 @@ const DEFAULT_IMAGE_STATE = {
   imgUrl: null,
   processedImg: null,
   originalImage: null,
+  meta: {
+    name: "",
+    size: 0,
+  },
 };
 
 const DEFAULT_ADJUSTMENT_STATE = {

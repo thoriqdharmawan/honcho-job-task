@@ -1,4 +1,4 @@
-import { DIALOG_CONFIRMATION_TYPE } from "@/lib/global.types";
+import { DIALOG_CONFIRMATION_TYPE, IMAGE_FORMAT } from "@/lib/global.types";
 
 type DialogConfirmation = {
   title: string;
@@ -29,3 +29,23 @@ export const DEFAULT_DIALOG_CONFIRMATION: Record<
     textPrimary: "Delete",
   },
 };
+
+type ImageFormatOption = {
+  value: IMAGE_FORMAT;
+  label: string;
+};
+
+export const IMAGE_FORMAT_OPTIONS: ImageFormatOption[] = [
+  {
+    value: "png",
+    label: "PNG",
+  },
+  {
+    value: "jpeg",
+    label: "JPEG",
+  },
+  {
+    value: "webp",
+    label: "WEBP",
+  },
+];

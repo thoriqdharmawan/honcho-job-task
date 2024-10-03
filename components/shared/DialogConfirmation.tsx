@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, ReactNode } from "react";
 import {
   Dialog,
   DialogClose,
@@ -10,7 +10,7 @@ import {
 } from "../ui/dialog";
 import { Button } from "../ui/button";
 
-type DialogConfirmationProps = {
+export type DialogConfirmationProps = {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   title: string;
@@ -19,6 +19,7 @@ type DialogConfirmationProps = {
   textPrimary?: string;
   onClickSecondary: () => void;
   onClickPrimary: () => void;
+  children?: ReactNode;
 };
 
 const DialogConfirmation: FC<DialogConfirmationProps> = (props) => {
@@ -31,6 +32,7 @@ const DialogConfirmation: FC<DialogConfirmationProps> = (props) => {
     textSecondary,
     onClickSecondary,
     onClickPrimary,
+    children,
   } = props;
 
   return (
@@ -40,13 +42,14 @@ const DialogConfirmation: FC<DialogConfirmationProps> = (props) => {
           <DialogTitle className="mb-3">{title}</DialogTitle>
           <DialogDescription>{description}</DialogDescription>
         </DialogHeader>
+        {children}
         <DialogFooter className="mt-3">
-          <DialogClose className="flex justify-center gap-3 md:justify-end">
+          <div className="flex justify-center gap-3 md:justify-end">
             <Button variant="secondary" onClick={onClickSecondary}>
               {textSecondary || "Cancel"}
             </Button>
             <Button onClick={onClickPrimary}>{textPrimary || "Save"}</Button>
-          </DialogClose>
+          </div>
         </DialogFooter>
       </DialogContent>
     </Dialog>
