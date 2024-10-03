@@ -4,8 +4,8 @@ import { FC, ReactNode } from "react";
 import { useImageAdjustmentContext } from "@/providers/ImageAdjustmentProvider";
 import FilterConfig from "../pages/filter/FilterConfig";
 import CropConfig from "../pages/crop/CropConfig";
-import ListMenu from "./configuration-menu/ListMenu";
-import ConfigurationAction from "./configuration-menu/ConfigurationAction";
+import ListMenu from "../pages/configuration-menu/ListMenu";
+import ConfigurationAction from "../pages/configuration-menu/ConfigurationAction";
 import AdjustmentConfig from "../pages/adjustment/AdjustmentConfig";
 
 type SidebarProps = {
