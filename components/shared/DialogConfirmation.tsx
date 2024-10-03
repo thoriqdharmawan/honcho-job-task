@@ -1,7 +1,6 @@
 import { FC, ReactNode } from "react";
 import {
   Dialog,
-  DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,

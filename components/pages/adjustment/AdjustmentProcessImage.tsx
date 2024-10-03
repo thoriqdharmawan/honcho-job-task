@@ -37,6 +37,7 @@ const AdjustmentProcessImage: FC = () => {
     if (action === "ADJUSTMENT") {
       drawImage();
     }
+    /* eslint-disable-next-line react-hooks/exhaustive-deps */
   }, [src, brightness, saturation, hue, contrast, action]);
 
   return (
